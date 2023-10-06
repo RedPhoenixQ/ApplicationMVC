@@ -1,0 +1,68 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+td, th {
+    padding: 0.5rem;
+}
+
+thead {
+    border-bottom: 1px solid black;
+    text-transform: capitalize;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(0,0,0,20%);
+}
+
+dt {
+    text-transform: capitalize;
+}
+
+.notification {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    background: rgb(200, 100, 100);
+    border-radius: 1rem;
+}
+
+.hidden-cell {
+    width: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+.stretched-link {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+}
+
+.two-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+}
