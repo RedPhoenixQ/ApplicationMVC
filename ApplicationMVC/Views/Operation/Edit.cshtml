@@ -1,0 +1,102 @@
+﻿@functions{
+    public string CamelCase(string str)
+    {
+        var words = str.Split(new[] { "_", " " }, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(" ", words);
+    }
+}
+
+@{
+    var Operation = ViewBag.Operation.Rows[0];
+    bool completed = Operation["completed"] == 1;
+}
+
+@if (ViewBag.error != null)
+{
+       <div class="notification">
+           @ViewBag.error
+       </div>
+}
+
+<div class="two-columns">
+    <dl>
+        @foreach (var Column in ViewBag.Operation.Columns)
+        {
+            <dt>@CamelCase(Column.ToString())</dt>
+            <dd>@Operation[Column]</dd>
+            @if (!completed && Column.ToString() == "completed")
+            {
+                <dd>
+                    <form method="post" action="@Url.Action("Complete", "Operation")">
+                        <input type="hidden" name="date" value="@(Operation["date"])" />
+                        <input type="hidden" name="codetype" value="@(Operation["codetype"])" />
+                        <input type="hidden" name="i_nr" value="@(Operation["i_nr"])" />
+                        <label class="btn">
+                            Success:
+                            <input class="btn-check" type="checkbox" name="success" />
+                        </label>
+                        <button class="btn btn-primary">Complete Operation</button>
+                    </form>
+                </dd>
+            }
+        }
+    </dl>
+    <div>
+        @if (!completed)
+        {
+            <form method="post" action="@Url.Action("AddAgent", "Operation")">
+                <input type="hidden" name="date" value="@(Operation["date"])" />
+                <input type="hidden" name="codetype" value="@(Operation["codetype"])" />
+                <input type="hidden" name="i_nr" value="@(Operation["i_nr"])" />
+                <select name="agent">
+                    <option value="">Add agent</option>
+                    @foreach (var Row in ViewBag.AllAgents.Rows)
+                    {
+                        <option value="@Row["name"]@Row["nr"]">@Row["name"]@Row["nr"]</option>
+                    }
+                </select>
+                <button class="btn btn-success">Add</button>
+            </form>
+        }
+        <table>
+            <caption>Agents</caption>
+            <thead>
+                <tr>
+                    @foreach (var Column in ViewBag.Agents.Columns)
+                    {
+                        <th>@CamelCase(Column.ToString())</th>
+                    }
+
+                    @if (!completed)
+                    {
+                        <th></th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Row in ViewBag.Agents.Rows)
+                {
+                    <tr>
+                        @foreach (var Column in ViewBag.Agents.Columns)
+                        {
+                            <td>@Row[Column]</td>
+                        }
+                        @if (!completed)
+                        {
+                            <td>
+                                <form method="post" action="@Url.Action("RemoveAgent")">
+                                    <input type="hidden" name="name" value="@(Row["name"])" />
+                                    <input type="hidden" name="nr" value="@(Row["nr"])" />
+                                    <input type="hidden" name="date" value="@(Operation["date"])" />
+                                    <input type="hidden" name="codetype" value="@(Operation["codetype"])" />
+                                    <input type="hidden" name="i_nr" value="@(Operation["i_nr"])" />
+                                    <button class="btn btn-danger">Remove</button>
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

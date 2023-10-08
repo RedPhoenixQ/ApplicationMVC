@@ -1,0 +1,39 @@
+﻿@functions{
+    public string CamelCase(string str)
+    {
+        var words = str.Split(new[] { "_", " " }, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(" ", words);
+    }
+}
+
+<table>
+    <caption>Incidents</caption>
+    <thead>
+        <tr>
+            <th></th>
+            @foreach (var Column in ViewBag.Incidents.Columns)
+            {
+                <th>@CamelCase(Column.ToString())</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Row in ViewBag.Incidents.Rows)
+        {
+            <tr class="relative">
+                <th scope="row" class="hidden-cell"><a class="stretched-link" href=@Url.Action("Details", "Incident", new{ nr = Row["nr"] })></a></th>
+                @foreach (var Column in ViewBag.Incidents.Columns)
+                {
+                    @if (!DBNull.Value.Equals(Row[Column]) && Column.DataType == typeof(DateTime))
+                    {
+                        <td>@Row[Column].ToString("d")</td>
+                    }
+                    else
+                    {
+                        <td>@Row[Column]</td>
+                    }
+                }
+            </tr>
+        }
+        </tbody>
+</table>

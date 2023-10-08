@@ -1,0 +1,53 @@
+﻿@functions{
+    public string CamelCase(string str)
+    {
+        var words = str.Split(new[] { "_", " " }, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(" ", words);
+    }
+}
+
+@{
+    var Agent = ViewBag.Agent.Rows[0];
+}
+
+<div class="two-columns">
+    <dl>
+        @foreach (var Column in ViewBag.Agent.Columns)
+        {
+            <dt>@CamelCase(Column.ToString())</dt>
+            <dd>@Agent[Column]</dd>
+        }
+    </dl>
+
+    <table>
+        <caption>Operations</caption>
+        <thead>
+            <tr>
+                <th class="hidden-cell"></th>
+                @foreach (var Column in ViewBag.Operations.Columns)
+                {
+                    <th>@CamelCase(Column.ToString())</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Row in ViewBag.Operations.Rows)
+            {
+                <tr class="relative">
+                    <th scope="row" class="hidden-cell"><a class="stretched-link" href=@Url.Action("Edit", "Operation", new{ date = Row["date"], codetype = Row["codetype"], i_nr = Row["i_nr"] })></a></th>
+                    @foreach (var Column in ViewBag.Operations.Columns)
+                    {
+                        @if (!DBNull.Value.Equals(Row[Column]) && Column.DataType == typeof(DateTime))
+                        {
+                            <td>@Row[Column].ToString("d")</td>
+                        }
+                        else
+                        {
+                            <td>@Row[Column]</td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

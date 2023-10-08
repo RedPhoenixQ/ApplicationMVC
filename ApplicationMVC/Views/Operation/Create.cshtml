@@ -1,0 +1,29 @@
+﻿
+<form method="post" action="@Url.Action("Create")">
+    <input type="hidden" name="i_nr" value="@ViewBag.i_nr" />
+    <label>
+        Start date:
+        <input type="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+    </label>
+    <label>
+        End date:
+        <input type="date" name="end_date" value="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")" />
+    </label>
+    <label>
+        CodeType:
+        <input type="text" name="codetype" />
+    </label>
+    <fieldset>
+        <legend>Region</legend>
+        <label>
+            Region name:
+            <input type="text" name="region_name" />
+        </label>
+        <label>
+            Region terrain:
+            <input type="text" name="region_terrain" />
+        </label>
+    </fieldset>
+    <a class="btn btn-danger" href="@Url.Action("Index", "Incident")">Cancel</a>
+    <button class="btn btn-success">Create</button>
+</form>

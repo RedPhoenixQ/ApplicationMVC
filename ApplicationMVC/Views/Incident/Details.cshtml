@@ -1,0 +1,55 @@
+﻿@functions{
+    public string CamelCase(string str)
+    {
+        var words = str.Split(new[] { "_", " " }, StringSplitOptions.RemoveEmptyEntries);
+        return string.Join(" ", words);
+    }
+}
+
+@{
+    var Incident = ViewBag.Incident.Rows[0];
+}
+
+<div class="two-columns">
+    <dl>
+        @foreach (var Column in ViewBag.Incident.Columns)
+        {
+            <dt>@CamelCase(Column.ToString())</dt>
+            <dd>@Incident[Column]</dd>
+        }
+    </dl>
+    <div>
+        <table>
+            <caption>Operations</caption>
+            <thead>
+                <tr>
+                    <th></th>
+                    @foreach (var Column in ViewBag.Operations.Columns)
+                    {
+                        <th>@CamelCase(Column.ToString())</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Row in ViewBag.Operations.Rows)
+                {
+                    <tr class="relative">
+                        <th scope="row" class="hidden-cell"><a class="stretched-link" href=@Url.Action("Edit", "Operation", new{ date = Row["date"], codetype = Row["codetype"], i_nr = Incident["nr"] })></a></th>
+                        @foreach (var Column in ViewBag.Operations.Columns)
+                        {
+                            @if (!DBNull.Value.Equals(Row[Column]) && Column.DataType == typeof(DateTime))
+                            {
+                                <td>@Row[Column].ToString("d")</td>
+                            }
+                            else
+                            {
+                                <td>@Row[Column]</td>
+                            }
+                        }
+                    </tr>
+                }
+                <tr><td colspan="3" class="text-center"><a class="btn btn-primary" href=@Url.Action("Create", "Operation", new{ i_nr = Incident["nr"] })>Create Operation</a></td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
