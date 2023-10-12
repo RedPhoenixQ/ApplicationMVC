@@ -13,7 +13,7 @@ public class FieldAgentController : Controller
     public FieldAgentController(ILogger<FieldAgentController> logger, IHttpContextAccessor contextAccessor)
     {
         _logger = logger;
-        _connection_string = contextAccessor?.HttpContext?.Session?.GetString("ConnectionString");
+        _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
         _fieldAgentModel = _connection_string != null ? new FieldAgentModel(_connection_string) : null;
     }
 

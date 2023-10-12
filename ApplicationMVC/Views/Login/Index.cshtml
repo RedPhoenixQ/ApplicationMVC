@@ -1,13 +1,21 @@
 ﻿<h1>Login</h1>
 <form method="post">
-    <label>
+    <label class="form-lable">
         Username:
-        <input type="text" name="username" required />
+        <input class="form-control" type="text" name="username" required />
     </label>
-    <label>
+    <label class="form-lable">
         Password:
-        <input type="password" name="password" required />
+        <input class="form-control" type="password" name="password" required />
     </label>
     <button class="btn btn-primary">Login</button>
 </form>
 
+@if (ViewBag.error != null)
+{
+    <div role="alert" style="z-index:3" class="notification toast show bg-danger z-3">
+        <div class="toast-body">
+            @ViewBag.error
+        </div>
+    </div>
+}

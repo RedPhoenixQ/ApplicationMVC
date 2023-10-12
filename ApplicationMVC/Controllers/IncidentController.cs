@@ -18,17 +18,17 @@ public class IncidentController : Controller
     public IncidentController(ILogger<IncidentController> logger, IHttpContextAccessor contextAccessor)
     {
         _logger = logger;
-        _connection_string = contextAccessor?.HttpContext?.Session?.GetString("ConnectionString");
+        _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
         _incidentModel = _connection_string != null ? new IncidentModel(_connection_string) : null;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(string? query)
     {
         if (_incidentModel == null)
         {
             return RedirectToAction("Index", "Login");
         }
-        ViewBag.Incidents = _incidentModel.GetAll();
+        ViewBag.Incidents = query == null ? _incidentModel.GetAll() : _incidentModel.Search(query);
         return View();
     }
 

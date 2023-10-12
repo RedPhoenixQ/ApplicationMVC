@@ -18,17 +18,18 @@ public class OperationController : Controller
     public OperationController(ILogger<OperationController> logger, IHttpContextAccessor contextAccessor)
     {
         _logger = logger;
-        _connection_string = contextAccessor?.HttpContext?.Session?.GetString("ConnectionString");
+        _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
         _operationModel = _connection_string != null ? new OperationModel(_connection_string) : null;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(string? query)
     {
         if (_operationModel == null)
         {
             return RedirectToAction("Index", "Login");
         }
-        ViewBag.Operations = _operationModel.GetAll();
+        ViewBag.Operations = query == null ? _operationModel.GetAll() : _operationModel.Search(query);
+
         return View();
     }
 

@@ -20,7 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
-
+/*
 td, th {
     padding: 0.5rem;
 }
@@ -33,6 +33,7 @@ thead {
 tbody tr:nth-child(even) {
     background-color: rgba(0,0,0,20%);
 }
+*/
 
 dt {
     text-transform: capitalize;
@@ -42,9 +43,6 @@ dt {
     position: fixed;
     bottom: 1rem;
     right: 1rem;
-    padding: 0.5rem;
-    background: rgb(200, 100, 100);
-    border-radius: 1rem;
 }
 
 .hidden-cell {

@@ -46,12 +46,12 @@ public class LoginController : Controller
         {
             MySqlConnection conn = new(conn_string.ToString());
             conn.Open();
-            HttpContext.Session.SetString("Username", username);
-            HttpContext.Session.SetString("ConnectionString", conn_string.ToString());
+            HttpContext.Session.SetString(SessionKeys.Username, username);
+            HttpContext.Session.SetString(SessionKeys.ConnectionString, conn_string.ToString());
         } catch (MySqlException ex)
         {
             Console.WriteLine(ex);
-            ViewBag.Error = "Username or password is incorrect";
+            ViewBag.error = "Username or password is incorrect\n" + ex.Message;
             return View();
         }
         return RedirectToAction("Index", "Home");

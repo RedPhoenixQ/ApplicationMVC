@@ -6,7 +6,12 @@
     }
 }
 
-<table>
+<form class="container-sm input-group" hx-get="@Url.Action("Index")" hx-target="#tbody" hx-select="#tbody" hx-swap="outerHTML" hx-trigger="keyup,change changed delay:1s">
+    <input class="form-control" type="search" name="query" autocomplete="off" />
+    <button class="btn btn-primary">Search</button>
+</form>
+
+<table class="table table-striped table-hover">
     <caption>Operations</caption>
     <thead>
         <tr>
@@ -17,9 +22,9 @@
             }
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tbody">
         @foreach (var Row in ViewBag.Operations.Rows)
-            {
+        {
             <tr class="relative">
                 <th scope="row" class="hidden-cell"><a class="stretched-link" href=@Url.Action("Edit", "Operation", new{ date = Row["date"], codetype = Row["codetype"], i_nr = Row["i_nr"] })></a></th>
                 @foreach (var Column in ViewBag.Operations.Columns)
@@ -34,6 +39,6 @@
                     }
                 }
             </tr>
-            }
+        }
     </tbody>
 </table>

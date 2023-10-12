@@ -1,27 +1,26 @@
-﻿
-<form method="post" action="@Url.Action("Create")">
+﻿<form method="post" action="@Url.Action("Create")">
     <input type="hidden" name="i_nr" value="@ViewBag.i_nr" />
-    <label>
+    <label class="form-label">
         Start date:
-        <input type="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <input class="form-control" type="date" name="date" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
     </label>
-    <label>
+    <label class="form-lable">
         End date:
-        <input type="date" name="end_date" value="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")" />
+        <input class="form-control" type="date" name="end_date" value="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")" />
     </label>
-    <label>
+    <label class="form-lable">
         CodeType:
-        <input type="text" name="codetype" />
+        <input class="form-control" type="text" name="codetype" />
     </label>
     <fieldset>
         <legend>Region</legend>
-        <label>
+        <label class="form-lable">
             Region name:
-            <input type="text" name="region_name" />
+            <input class="form-control" type="text" name="region_name" />
         </label>
-        <label>
+        <label class="form-lable">
             Region terrain:
-            <input type="text" name="region_terrain" />
+            <input class="form-control" type="text" name="region_terrain" />
         </label>
     </fieldset>
     <a class="btn btn-danger" href="@Url.Action("Index", "Incident")">Cancel</a>
