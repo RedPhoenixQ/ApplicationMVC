@@ -11,9 +11,9 @@
       hx-target="#tbody"
       hx-select="#tbody"
       hx-swap="outerHTML"
-      hx-trigger="keyup,change changed delay:1s"
+      hx-trigger="keyup,change changed delay:500ms"
       hx-replace-url="true">
-    <input class="form-control" type="search" name="query" autocomplete="off" />
+    <input class="form-control" type="search" name="query" autocomplete="off" value="@ViewBag.Query" />
     <button class="btn btn-primary">Search</button>
 </form>
 

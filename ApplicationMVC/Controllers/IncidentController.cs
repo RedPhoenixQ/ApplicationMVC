@@ -29,6 +29,7 @@ public class IncidentController : Controller
             return RedirectToAction("Index", "Login");
         }
         ViewBag.Incidents = query == null ? _incidentModel.GetAll() : _incidentModel.Search(query);
+        ViewBag.Query = query ?? "";
         return View();
     }
 

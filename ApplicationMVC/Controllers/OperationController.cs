@@ -30,7 +30,7 @@ public class OperationController : Controller
             return RedirectToAction("Index", "Login");
         }
         ViewBag.Operations = query == null ? _operationModel.GetAll() : _operationModel.Search(query);
-
+        ViewBag.Query = query ?? "";
         return View();
     }
 
