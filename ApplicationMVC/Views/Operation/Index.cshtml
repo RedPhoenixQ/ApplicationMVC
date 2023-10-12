@@ -6,7 +6,13 @@
     }
 }
 
-<form class="container-sm input-group" hx-get="@Url.Action("Index")" hx-target="#tbody" hx-select="#tbody" hx-swap="outerHTML" hx-trigger="keyup,change changed delay:1s">
+<form class="container-sm input-group"
+      hx-get="@Url.Action("Index")"
+      hx-target="#tbody"
+      hx-select="#tbody"
+      hx-swap="outerHTML"
+      hx-trigger="keyup,change changed delay:1s"
+      hx-replace-url="true">
     <input class="form-control" type="search" name="query" autocomplete="off" />
     <button class="btn btn-primary">Search</button>
 </form>
