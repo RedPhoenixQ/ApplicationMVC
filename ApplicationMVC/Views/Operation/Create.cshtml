@@ -1,4 +1,13 @@
-﻿<form method="post" action="@Url.Action("Create")">
+﻿@if (ViewBag.error != null)
+{
+    <div role="alert" style="z-index:3" class="notification toast show bg-danger z-3">
+        <div class="toast-body">
+            @ViewBag.error
+        </div>
+    </div>
+}
+
+<form method="post" action="@Url.Action("Create")">
     <input type="hidden" name="i_nr" value="@ViewBag.i_nr" />
     <label class="form-label">
         Start date:

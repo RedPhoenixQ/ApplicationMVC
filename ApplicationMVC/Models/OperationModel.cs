@@ -13,7 +13,7 @@ public class OperationModel : BaseModel
 
 	public DataTable GetAll()
 	{
-		return ExecuteQuery(new MySqlCommand("SELECT * FROM AllOperation"));
+		return ExecuteQuery(new("SELECT * FROM AllOperation"));
 	}
 
     public DataTable Search(string query)
@@ -34,7 +34,7 @@ public class OperationModel : BaseModel
 
     public DataTable GetOne(DateTime date, string codetype, int i_nr)
     {
-        MySqlCommand cmd = new MySqlCommand("SELECT * FROM AllOperation WHERE date=@date AND codetype=@codetype AND i_nr=@i_nr");
+        MySqlCommand cmd = new("SELECT * FROM AllOperation WHERE date=@date AND codetype=@codetype AND i_nr=@i_nr");
         cmd.Parameters.AddWithValue("date", date);
         cmd.Parameters.AddWithValue("codetype", codetype);
         cmd.Parameters.AddWithValue("i_nr", i_nr);
@@ -65,8 +65,10 @@ public class OperationModel : BaseModel
 
     public bool Complete(DateTime date, string codetype, int i_nr, bool success)
     {
-        MySqlCommand cmd = new("complete_operation");
-        cmd.CommandType = CommandType.StoredProcedure;
+        MySqlCommand cmd = new("complete_operation")
+        {
+            CommandType = CommandType.StoredProcedure
+        };
         cmd.Parameters.AddWithValue("date", date);
         cmd.Parameters.AddWithValue("codetype", codetype);
         cmd.Parameters.AddWithValue("i_nr", i_nr);

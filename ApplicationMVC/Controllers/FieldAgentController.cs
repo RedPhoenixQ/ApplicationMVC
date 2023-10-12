@@ -14,7 +14,7 @@ public class FieldAgentController : Controller
     {
         _logger = logger;
         _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
-        _fieldAgentModel = _connection_string != null ? new FieldAgentModel(_connection_string) : null;
+        _fieldAgentModel = _connection_string != null ? new(_connection_string) : null;
     }
 
     public IActionResult Index()

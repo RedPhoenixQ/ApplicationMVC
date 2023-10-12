@@ -19,7 +19,7 @@ public class IncidentController : Controller
     {
         _logger = logger;
         _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
-        _incidentModel = _connection_string != null ? new IncidentModel(_connection_string) : null;
+        _incidentModel = _connection_string != null ? new(_connection_string) : null;
     }
 
     public IActionResult Index(string? query)

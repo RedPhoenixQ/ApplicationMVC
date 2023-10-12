@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationMVC.Models;
+using System.Xml.Linq;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +20,7 @@ public class OperationController : Controller
     {
         _logger = logger;
         _connection_string = contextAccessor?.HttpContext?.Session?.GetString(SessionKeys.ConnectionString);
-        _operationModel = _connection_string != null ? new OperationModel(_connection_string) : null;
+        _operationModel = _connection_string != null ? new(_connection_string) : null;
     }
 
     public IActionResult Index(string? query)
@@ -46,13 +47,14 @@ public class OperationController : Controller
         return View();
     }
 
-    public IActionResult Create(int i_nr)
+    public IActionResult Create(int i_nr, string? error)
     {
         if (_operationModel == null)
         {
             return RedirectToAction("Index", "Login");
         }
         ViewBag.i_nr = i_nr;
+        ViewBag.error = error;
         return View();
     }
 
@@ -87,8 +89,17 @@ public class OperationController : Controller
         {
             return RedirectToAction("Index", "Login");
         }
-        _operationModel.RemoveAgent(date, codetype, i_nr, name, nr);
-        return RedirectToAction("Edit", new { date, codetype, i_nr });
+        string? error = null;
+        try
+        {
+            _operationModel.RemoveAgent(date, codetype, i_nr, name, nr);
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+            Console.WriteLine(error);
+        }
+        return RedirectToAction("Edit", new { date, codetype, i_nr, error });
     }
 
     [HttpPost]
@@ -98,8 +109,17 @@ public class OperationController : Controller
         {
             return RedirectToAction("Index", "Login");
         }
-        _operationModel.Complete(date, codetype, i_nr, success == "on");
-        return RedirectToAction("Edit", new { date, codetype, i_nr });
+        string? error = null;
+        try
+        {
+            _operationModel.Complete(date, codetype, i_nr, success == "on");
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+            Console.WriteLine(error);
+        }
+        return RedirectToAction("Edit", new { date, codetype, i_nr, error });
     }
 
     [HttpPost]
@@ -109,16 +129,16 @@ public class OperationController : Controller
         {
             return RedirectToAction("Index", "Login");
         }
-        string? error = null;
+
         try
         {
             _operationModel.Create(date, codetype, i_nr, end_date, region_name, region_terrain);
         } catch (Exception ex)
         {
-            error = ex.Message;
-            Console.WriteLine(error);
+            Console.WriteLine(ex.Message);
+            return RedirectToAction("Create", new {i_nr, error = ex.Message});
         }
-        return RedirectToAction("Edit", new { date, codetype, i_nr, error });
+        return RedirectToAction("Edit", new { date, codetype, i_nr });
     }
 }
 

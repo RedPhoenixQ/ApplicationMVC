@@ -10,7 +10,7 @@ public class FieldAgentModel : BaseModel
 
 	public DataTable GetAll()
 	{
-		return ExecuteQuery(new MySqlCommand("SELECT * FROM AllFieldAgent"));
+		return ExecuteQuery(new("SELECT * FROM AllFieldAgent"));
 	}
 
     public DataTable GetOne(string name, int nr)

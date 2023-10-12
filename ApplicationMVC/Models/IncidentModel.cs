@@ -11,7 +11,7 @@ public class IncidentModel : BaseModel
 
 	public DataTable GetAll()
 	{
-		return ExecuteQuery(new MySqlCommand("SELECT * FROM Incident"));
+		return ExecuteQuery(new("SELECT * FROM Incident"));
 	}
 
     public DataTable Search(string query)
